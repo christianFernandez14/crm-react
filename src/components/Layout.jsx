@@ -1,20 +1,24 @@
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 
 const Layout = () => {
+
+  const location = useLocation()
+
+  console.log(location)
   return (
     <div className="md:flex md:min-h-screen">
       <aside className="md: w-1/4 bg-blue-600 px-5 py-10">
-        <h2 className="text-4xl font-black text-center text-white">CRM - Clientes</h2>
+        <h2 className="text-3xl font-black text-center text-white">CRM - Clientes</h2>
 
         <nav>
           <Link
-            className="text-2xl block mt-2 hover:text-blue-300 text-white"
+            className={`${location.pathname === '/' ? 'text-blue-300': 'text-white'} text-2xl block mt-2 hover:text-blue-300`}
             to="/"
           >
             Clientes
           </Link>
           <Link
-            className="text-2xl block mt-2 hover:text-blue-300 text-white"
+            className={`${location.pathname === '/clientes/nuevo' ? 'text-blue-300': 'text-white'} text-2xl block mt-2 hover:text-blue-300`}
             to="/clientes/nuevo"
           >
             Cliente Nuevo
@@ -34,15 +38,15 @@ export default Layout
 
 
 
-//? Incorporando Link
+//? Trabajando con el hook useLocation
 /* 
-  1.- Muy bien sabemos que para trabajar con enlances y navegación, el tag (<a href="http://"></a>)
-      anchor vendria bien, pero React, nos trae algo mas otimizado que es propio de
-      react-router-dom y este es es Link
-  2.- Para darle continudad al intem anterior, debes extarerlo 
-  3.- Lo incluidmos dentro de una nav (utlizando los tag correctos por temas SEO)
-  4.- Le agregamos algo de estilo ambos link
-  5.- Si le das a inspecionar a los link, veras que vendra con el tag (a), pero mas optimizado
+  1.- Es un hook que trae react-router-dom
+  2.- Simplemente lo extrae
+  3.- lo declaras y el hook no recibe nada como parametros
+  4.- si hace un clg de la variable que declaraste veras que te trae un objeto con info
+      en la ruta que te encuentres o que le des click
+  5.- Incorporamos un poco de estilo, para resaltar en nav la pagina que no encontramos y eso lo
+      hacemos con el pathname (una de las propiedades del objeto)
 
 
 */
