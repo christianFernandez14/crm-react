@@ -6,9 +6,39 @@ const Cliente = ({ cliente }) => {
   const { id, nombre, empresa, telefono, email } = cliente
   return (
     <>
-      <tr>
+      <tr className="border-b">
+        <td className="p-6 space-y-2">
+          <p className="text-2xl text-gray-800">{nombre}</p>
+          <p>{empresa}</p>
+        </td>
         <td className="p-6">
-          {nombre}
+          <p className="text-gray-600">
+            <span className="text-gray-800 uppercase font-bold">
+              Email:{' '}
+            </span>
+            {email}
+          </p>
+          <p className="text-gray-600">
+            <span className="text-gray-800 uppercase font-bold">
+              Tel:{' '}
+            </span>
+            {telefono}
+          </p>
+        </td>
+        <td className="p-6 flex gap-4">
+          <button
+            type="button"
+            className="text-blue-600 hover:text-blue-700 uppercase font-bold text-xs"
+          >
+            editar
+          </button>
+
+          <button
+            type="button"
+            className="text-red-600 hover:text-red-700 uppercase font-bold text-xs"
+          >
+            elimninar
+          </button>
         </td>
       </tr>
     </>
@@ -18,14 +48,12 @@ const Cliente = ({ cliente }) => {
 export default Cliente
 
 
-//? Creando Componente
+//? Mostrando el resto de la información que viene del state de clientes
 /* 
-1.- Utlizas el snnipet de rafce, para que te cree tu componente con formato arrow function
-2.- Recibimos las propos que me envia Index.jsx, para poder trabajarr con la data.
-3.- Viendo que es un objeto que me estan pasando, con el CLG, puedo hacer un destructuring 
-    y obtener la propiedades con las que voy a trabajar y asi solo usar el nombre de la
-    propiedad y no el conjunto "obejeto.propiedad"
-4.- Le dimos un poco de estilo a la fila (padding)
+1.- Completamos la inforacion que va en la columna contacto y la columna Acciones
+2.- Le dimos algo de estilos a como se ve el contenido
+3.- En los botones de "editar" y "eliminar" es importante que le especique que es de tipo
+    button, para que se comporte como tal
  
 
 */
