@@ -1,10 +1,56 @@
-export function Loader() {
+import { useLoaderData } from "react-router-dom";
 
-  return 'Desde el louder'
+
+export function loader() {
+
+  const clientes = [
+    {
+        id: 1,
+        nombre: 'Juan',
+        telefono: 102013313,
+        email: "juan@juan.com",
+        empresa: 'Codigo Con Juan'
+    },
+    {
+        id: 2,
+        nombre: 'Karen',
+        telefono: 138198313,
+        email: "karen@juan.com",
+        empresa: 'Codigo Con Juan'
+    },
+    {
+        id: 3,
+        nombre: 'Josue',
+        telefono: 31983913,
+        email: "josue@juan.com",
+        empresa: 'Codigo Con Juan'
+    },
+    {
+        id: 4,
+        nombre: 'Miguel',
+        telefono: 319381983,
+        email: "miguel@juan.com",
+        empresa: 'Codigo Con Juan'
+    },
+    {
+        id: 5,
+        nombre: 'Pedro',
+        telefono: 1398198938,
+        email: "pedro@juan.com",
+        empresa: 'Codigo Con Juan'
+    },
+];
+
+  return clientes;
 }
 
 
 const Index = () => {
+
+  const datos = useLoaderData()
+
+  console.log(datos)
+
   return (
     <>
       <h1 className="font-black text-4xl text-blue-900">Clientes</h1>
@@ -17,23 +63,22 @@ const Index = () => {
 export default Index
 
 
-//? Trabajando con el page y Loader
+//? Obtiendo los datos del Loader
 
 /* 
-  1.- Creamos algunas etiquetas con algunos estilos y todo dentro de un fragment
-  2.- react-router-dom, trabaja con state propios, es decir no es necesario usar el useState
-  3.- Para esto debemo exportar un funcion que se llama "louder" y se recomienda que este
-      en el mismo componente
-  4.- Como estamos en el page que manejara los clientes usualmente usariamos un useState, que 
-      lo trairiamos de alguna Api, o algun archivo de prueba dentro de tu proyecto, y se mostraria
-      gracias al useEffect, sea una vez o si apunta alguna dependecia
-  5.- Desde la version 6.4 de react-router-dom, te permite trabajar con loader
-  6.- Es muy similar al useEffect, ya que es una funcion que se va a ejecutar cuando el componente
-      cargue, por lo tanto es ideal para cargar un state o consultar una API y mosrar el resultado 
-      en un componente
-  7.- El loader, siempre va retornar algo, ya que de lo contrario no funcionara
-  8.- Si te fijas bien , el loader lo estas EXPORTANDO, en el componente donde lo vas usar.
-  9.- Para eso debes ir al main.jsx
+  1.- Modifique el nombre del Loader, porque debe ser en minuscula, y lo modifique tambien
+      el main, donode lo estoy importando.
+  2.- Recuerda que el return de loader, va ser le State del componente
+  3.- En este componete ya tenemos disponible el loader para trabajar con, gracias a la
+      configuración que se hizo en el main
+  4.- Y la manera de trabajar con el es usando un hook (useLoaderData), que se encargara de
+      obtener lo que retornes en la funcion loader
+  5.- Como puedes ver declaramos un objeto de nombre "clientes", y lo retornamos, todo esto dentro
+      de la función loader
+  6.- Y para acceder a esos datos lo que hicimos fue declarar un varible, le asiganamos el hook
+      y le hicimos un CLG a la variable y nos trae el objeto
+  7.- Y de esta manera ya tiene tu State disonible para trabaja con el, como por ejemplo iterar 
+      sobre clientes y rederizarlo en el componente
 
 
 */
