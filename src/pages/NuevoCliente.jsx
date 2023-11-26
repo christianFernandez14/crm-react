@@ -1,12 +1,26 @@
 import { useNavigate, Form } from "react-router-dom";
 import Formulario from "../components/Formulario";
 
-export function action() {
+export async function action({ request }) {
 
-  console.log('Submit al formulario...')
-  
-  // return null;
-} 
+  const formData = await request.formData()
+
+  /* Los datos estaran en formData */
+
+  // 5
+  // console.log(formData.get('nombre'))
+
+  // 6
+  // console.log([...formData])
+
+  // 7
+  const datos = Object.fromEntries(formData)
+  console.log(datos)
+
+
+  // Averiguar por que sin el return me genera un error, en el ejemplo basico de con el CLG
+  return null;
+}
 
 const NuevoCliente = () => {
   const navigate = useNavigate()
@@ -46,24 +60,21 @@ const NuevoCliente = () => {
 export default NuevoCliente
 
 
-//? Lo nuevo para el manejo de actiones con los formularioas
+//? Leyendo la info que se pasa por el formulario
 /* 
-1.- Anteriormente nosotros para prevenir que acciones del formulario o trabajar con formularios controlados, en la
-    etiqueta <form>, manejamos un evento (onSubmint), y a este le asociabamos una función (handleSubmit), que luego
-    la declaramos fuera del return, para nosotros controlar la accion del formulario, a eso le llamabamos formularios
-    controlados.
-2.- Ahora con la nuevas versiones del react-router-dom (affter V6.4.0), ya no es necesario hacer el item anterios, ya
-    el maneja solicitudes Http (post, get(como el loader))
-3.- Ok, ahora si; react-rouer-dom incorporo un componeten (Form), que sustituira el tag <form> y este componente lo extraes
-    de esta misma dependencia.
-4.- Debes definirle que tipo de "metodo" http tendra, que normalment los formularios son de tipo post, ya que envia información.
-5.- tambien tendran otro atributo que es la "action" (no es más que un archivo o un url, donde se envia los dato), 
-    pero la vamos a trabajar como una funcion, tal cual como trabajamos el loader, por lo tanto es tarea de react-router-dom
-    del envio del formulario.
-6.- Siendo lo que dice el item anterior, te debes estar preguntando como el formulario sabe de ese "action"
-7.- Para esto debes ir al main.jsx, importarlo, pasarselo el elemento que lo requiere (page NuevoCliente) y ahi justo ahi es 
-    que lo puede utlizar en esta page, ya que el formulario lo reconocera al hacer click el boton submit
-8.- Como repaso: Utliza Loader (para obtener datos de una API o de un objeto, que es lo que venias haciendo con un State)
-    y utiliza Action (para procesar entradas de datos de un formulario (Form))
-
+1.- Hasta este minutos tenesmo formas y pasos a seguir, para trabajar con todas las propiedades que nos trae las nuevas
+    versiones de react-router-dom, y el action no sera un excepcion. 
+2.- Ya con el "action" valindando lo que va hacer el form, lueo de darle al boton submit, a esa funcion siempre se le 
+    pasa un "request" (petición) y Si se le haces un CLG a ese "request" veras que te trae un objeto (Request), con muchas 
+    propiedades.
+3.- Si te vas al prototype del objeto, veras que existe una porpiedad que se llama "formData" y es a traves de el que  
+    accederemos a la info que sumnistren en el formulario.
+4.- Ahora modifiacamos un pocon la función, ya que esa petición puede tardar un poco (async await).
+5.- Podemos acceder a los valores utilizando metodos propios de FormData, por ejemplo .get() y le pasa el nombre de la propiedad
+    que definiste en el objeto.
+6.- Tambien podemos acceder a el haciendo una copia de lo que hay en FormData ([...formData]) y me traeria un arreglo, donde cada
+    elemento de ese arreglo es un arreglo, par (propiedad, valor) como string, a lo que le llamamos un Spread Operetors.
+7.- Y una tercera manera de manejar la data que se envia por el formulario, es asigandolo a un Object y usando su propiedad
+    fromEntries(), pasandole a ese metodo, lo que trajo fromData, dando como resultado un obejeto organizado con el nombre
+    del campo y el valor que coloca el usuario en el input.
 */
