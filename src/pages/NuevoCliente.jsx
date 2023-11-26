@@ -8,10 +8,18 @@ export async function action({ request }) {
 
   const datos = Object.fromEntries(formData)
 
+  const email = formData.get('email')
+
   // Validación:
   const errores = []
   if (Object.values(datos).includes('')) {
     errores.push('Todos los campos son requeridos')
+  }
+
+  let regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+
+  if(!regex.test(email)){
+    errores.push('No es un email valido')
   }
 
   // Retornando datos si hay errores:
@@ -20,16 +28,17 @@ export async function action({ request }) {
   }
 
   // Averiguar por que sin el return me genera un error, en el ejemplo basico de con el CLG
-  // return null;
+  return null;
 }
 
 const NuevoCliente = () => {
 
   const errores = useActionData()
   const navigate = useNavigate()
+  const  infodeAction = useActionData()
 
 
-  // console.log(errores)
+  console.log(infodeAction)
   return (
     <>
       <h1 className="font-black text-4xl text-blue-900">Nuevo Clientes</h1>
@@ -48,6 +57,7 @@ const NuevoCliente = () => {
         {errores?.length && errores.map((error, i)=> <Error key={i}>{error}</Error>) }
         <Form
           method="POST"
+          noValidate
         >
           <Formulario />
 
@@ -68,24 +78,15 @@ export default NuevoCliente
 
 //? Trabajando con las validaciones del Formualario
 /* 
-  1.- Como sabemos formData desde el action, va contener toda la información que el usuario instroduzca en el formulario
-  2.- En ese mismo lugar (action), seria ideal tambien manejar las validaciones del formulario.
-  3.- De las tres maneras que vimos para debuguiar la data, nos quedamos Object.fromEntries(), y asi nos aseguramos de trabajar
-      con objetos y podemos aplicar validaciones; digamos de una manera más sencilla. 
-  4.- Validando un poco, usamos la propiedad values() del Object, para verificar si incluye alguno vacio.
-  5.- Pushiamos (como no es un State, podemos mutar los valores), en una array de errores que definos un poco más arriba, para que manejemos
-      los errores 
-  6.- Nos preguntamos, como obtenmos el error que nos arrajo o como lo renderizamos, ya que tenemos dos funciones distintas, una es el action
-      y la otra es el componente en si.
-  7.- Para eso validamos si el array de errores que declaramos, tiene algo y retornamos ese arreglo.
-  8.- Y la manera de como acceder a ese arreglo es por medio de un hook ( "useActionData"), que te permite acceder a lo que hay dentro 
-      del action
-  9.- Este hook lo debes importar de react-router-dom, asignarle el hook a una variable y de esta manera obtenemos en nuestro componente lo
-      que esta en el action.
-  10.- Lo renderiazamos antes del componente (Form)
-  11.- En el renderizado, nos percatamos que nos trae undefined un par de veces la data de erroes, por lo tanto usamos
-       el "optinal chaning", para comprobar primero si hay info y luego vemos si tiene elementos ese array, iteramos sobre el.
-  12.- Pero antes importamos el componente Error.jsx, para poder utilizarlo.
-  13.- El componente anterior es el que colocamos en la iteración, y le pasamos com key el indice que maneja ese error, no se recomienda
-       usar el inice de un array como key, pero para este caso, este dato (el valor de error), no va a cambiar, por lo tanto podemos usar el indice como key
+  1.- Veniamos validando todos los campos simultaneos, con include(), dentro de un objeto o array, pero tambien podemos validar
+      campos por separados y especifcamente para ese caso, vamos validar que sea un email valido
+  2.- Para seguir con el item anterior, obetenemos el valor del email con .get().
+  3.- Luego, declaramos una variable Regexp (expresion regular), ya que la validacion de un mail esta compuesto por tres parte, un 
+      nombre o usuario, el @ y el dominio (ya que es la mejor forma de validar un mail)
+  4.- Luego con un condicional simple, le pasamos un al Regexp un .test, metodo de la expresion regular, para justamente validar o
+      testear el eamil, tenga los tres componentes (usuario, @, dominio)
+  5.- Haciendo las pruebas nos percatamos que HTML:5, nos genera la validadion por defaul primero que nuestra, por lo tanto se le paso
+      como atributo al Form, "noValidate", para que no haga el estrabajo, sino nosotros.
+  6.- Pushiamos un nuevo error, para mostrarlo, en caso que no lo cumpla la condición, por eso el "If" lo tenemos como negando
+  7.- Y ya tenemos no solo la validación de todos los campos, sino tambien la del mail.
 */
