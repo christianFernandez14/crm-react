@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import Formulario from "../components/Formulario";
 
 const NuevoCliente = () => {
   const navigate = useNavigate()
@@ -17,7 +18,14 @@ const NuevoCliente = () => {
         </button>
       </div>
       <div className="bg-white shadow rounded-md md:w-3/4 mx-auto px-5 py-10">
-        <p>Formulario aqui</p>
+        
+        <Formulario />
+        
+        <input
+          type="submit"
+          className="mt-5 w-full bg-blue-800 p-3 uppercase font-bold text-white text-lg hover:bg-blue-900 cursor-pointer transition-all"
+          value="Registrar Cliente"
+        />
 
       </div>
     </>
@@ -27,17 +35,9 @@ const NuevoCliente = () => {
 export default NuevoCliente
 
 
-//? Trabajando en el Componente y con el hook useNavigate
-
+//? Trabajando en el Componente
 /* 
-1.- Me trate el h1 y p de Index.jsx, para tener el mismo formato  
-2.- Creamos un boton en este componente por si el usuario no querie agregar nada y desea volver
-3.- A pesar que tenemos una propiedad que nos ayuda navegar de react-router-dom que es Link, existe un hook
-    que nos ayudara a navegar de forma programada y este es useNavigate, 
-4.- En el caso del boton que creamos, para volver, puedes pasarle a la ruta como parametro ('/') o (-1)
-    y este ultimo te llevara a la pagina anterior
-5.- Recuerda, todos los hooks, sea dependecias o Customs, todos absolutamentes todos van dentro de la función
-    del componete y hasta arriba
-6.- El useNavigate delcarado, va estar asociado a un evento onClick del boton.
+1.- Importamos el componete Formulario.jsx
+2.- Agregamos un boton fuera del componente, con sus respectivos estilos.
 
 */
