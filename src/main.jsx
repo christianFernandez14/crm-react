@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from './components/Layout';
+import ErrorPage from './components/ErrorPage';
 import NuevoCliente, { action as nuevoClienteAction } from './pages/NuevoCliente';
 import Index, { loader as clientesLoader } from './pages/Index';
 import './index.css'
@@ -14,7 +15,8 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <Index />,
-        loader: clientesLoader
+        loader: clientesLoader,
+        errorElement: <ErrorPage />
       },
       {
         path: '/clientes/nuevo',
@@ -35,10 +37,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 //? Importando la action desde la page NuevoCliente.
 
 /* 
-  1.- Importando la action desde la page NuevoCliente.jsx, para que el formulario que esta en esta page, pueda reconocerlo,
-      recuerda que la manera de como lo estamos importando con {}, es porque lo exportamos de manera nombrada
-  2.- Lo renombramos (as), para que no tenga problemas con otros formularios que podamos crear el futuro
-  3.- Se lo asignamos a la propiedad "action", del elemento que lo requiere, que este caso es la page NuevoCliente.jsx
+  1.- Importamos el componente ErrorPage aca.
+  2.- Definimos otra propiedad dentro del elemento que va llevar el error (Index), esta propiedad es de nombre 
+      errorElement
+  3.- Y esta le pasamos el componente que recien importamos como valor 
   
 */
 
