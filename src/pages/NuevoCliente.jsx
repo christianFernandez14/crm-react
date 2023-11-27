@@ -38,7 +38,7 @@ const NuevoCliente = () => {
   const  infodeAction = useActionData()
 
 
-  console.log(infodeAction)
+  // console.log(infodeAction)
   return (
     <>
       <h1 className="font-black text-4xl text-blue-900">Nuevo Clientes</h1>
@@ -76,17 +76,7 @@ const NuevoCliente = () => {
 export default NuevoCliente
 
 
-//? Trabajando con las validaciones del Formualario
+//? Solo comentamos el CLG
 /* 
-  1.- Veniamos validando todos los campos simultaneos, con include(), dentro de un objeto o array, pero tambien podemos validar
-      campos por separados y especifcamente para ese caso, vamos validar que sea un email valido
-  2.- Para seguir con el item anterior, obetenemos el valor del email con .get().
-  3.- Luego, declaramos una variable Regexp (expresion regular), ya que la validacion de un mail esta compuesto por tres parte, un 
-      nombre o usuario, el @ y el dominio (ya que es la mejor forma de validar un mail)
-  4.- Luego con un condicional simple, le pasamos un al Regexp un .test, metodo de la expresion regular, para justamente validar o
-      testear el eamil, tenga los tres componentes (usuario, @, dominio)
-  5.- Haciendo las pruebas nos percatamos que HTML:5, nos genera la validadion por defaul primero que nuestra, por lo tanto se le paso
-      como atributo al Form, "noValidate", para que no haga el estrabajo, sino nosotros.
-  6.- Pushiamos un nuevo error, para mostrarlo, en caso que no lo cumpla la condición, por eso el "If" lo tenemos como negando
-  7.- Y ya tenemos no solo la validación de todos los campos, sino tambien la del mail.
+  1.- 
 */
