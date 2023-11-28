@@ -1,13 +1,12 @@
-import { useNavigate, Form, useActionData } from "react-router-dom";
+import { useNavigate, Form, useActionData, redirect } from "react-router-dom";
+import { agregarCliente } from "../api/clientes";
 import Formulario from "../components/Formulario";
 import Error from "../components/Error";
 
 export async function action({ request }) {
 
   const formData = await request.formData()
-
   const datos = Object.fromEntries(formData)
-
   const email = formData.get('email')
 
   // Validación:
@@ -27,15 +26,17 @@ export async function action({ request }) {
     return errores;
   }
 
-  // Averiguar por que sin el return me genera un error, en el ejemplo basico de con el CLG
-  return null;
+
+  await agregarCliente(datos)
+
+  return redirect('/')
 }
 
 const NuevoCliente = () => {
 
   const errores = useActionData()
   const navigate = useNavigate()
-  const  infodeAction = useActionData()
+  const infodeAction = useActionData()
 
 
   // console.log(infodeAction)
@@ -76,7 +77,21 @@ const NuevoCliente = () => {
 export default NuevoCliente
 
 
-//? Solo comentamos el CLG
+//? Agregando data a nustro REST Api
 /* 
-  1.- 
+  1.- Importamos la funcion que se encargara de ingregar data a nustro REST Api
+  
+  2.- Llamamos hasta al final del action la funcion "agregarCliente" y si llega hasta ahi, es poque
+      paso todas las validaciones
+  
+  3.- De nuevo me esta generando el error, sino le coloco nada al return, en esta oportunidad en vez de pasarle
+      null, le pase un string vacio.
+
+  4.- Hasta aca se comunica bien, la respuesta viene del archivo cliente.js
+
+  5.- Ya avanzado un poco en la explicacion, se recomienda usar en el return redirect, que es nativa de 
+      react-router-dom, te podras estar preguntando que tenemos navigate y LINK, que pueden cumplir la misma
+      función, la gente react, react recomentas que dentro del "action" o "loader" usas redirect, para botones "navigate"y para enlances en si LINK
+  
+  6.- Se respondio el problema del return en el action, que siempre debe estar.
 */

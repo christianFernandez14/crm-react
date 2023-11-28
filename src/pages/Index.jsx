@@ -1,5 +1,5 @@
 import { useLoaderData } from "react-router-dom";
-import { obtenerClientes } from '../api/clientes'
+import { obtenerClientes } from '../api/clientes';
 import Cliente from "../components/Cliente";
 
 export function loader() {
@@ -55,16 +55,8 @@ const Index = () => {
 export default Index
 
 
-//? Accienndo a la variable de entorno
+//? Agregando data a mi REST Api (Esto es el componente NuevoCliente)
 
 /* 
-  1.- Sacamos el contenido duro que estaba en el loader, para consumir la api desde ahi, recuerda
-      que es el lugar ideal para hacerlo, ya que al cargar este componente se cargara lo que vamos
-      consumir de la API.
-  2.- Para acceder a lo que esta dentro de .env (variables de entorno, hacemos uso de un metodo .meta)
-
-  3.- Importamos la funcion en llave, ya que fue exportada de forma nombrada, se lo asignamos a una variable
-      y la  retormamos y veras el mismo resultado que teniamos desde codigo duro en el  mismo loader
-  
-  4.- Caso curioso, si retornas la funcion directamente, no hay problema igual me muestra lo que hay en la api
+  1.- 
 */
