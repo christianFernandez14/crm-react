@@ -7,8 +7,8 @@ const ErrorPage = () => {
   return (
     <div className='space-y-8'>
       <h1 className='text-center text-5xl font-extrabold mt-20 text-blue-900'>CRM - CLIENTES</h1>
-      <p className='text-center'>Hubo un error</p>
-      <p className='text-left'>{error.message}</p>
+      <p className='text-center uppercase font-bold'>Hubo un error</p>
+      <p className='text-center uppercase text-red-900 font-semibold'>{error.statusText || error.message}</p>
 
     </div>
   )
@@ -21,18 +21,8 @@ export default ErrorPage
 
 /* 
 
-  1.- Como siempre el Snnipet, para crear el componente
-  2.- Este componente es creado, para manejar las paginas de los errores y en particular los errores
-      que me  genera React, por algun tipo de sintaxis, en este caso particular, cuando se te olvida
-      pasarle el return a loader.
-  3.- Lo anterior se le llama Error Boundaries, No son más que componetes de React que obtienen los errores, 
-      en cualquier lugar del componente, en este caso en particular lo esta obteniendo del loader, por la
-      falta del return
-
-  4.- Es importante aclarar que es parte de React, no react-router-dom
-
-  5.- Para obtener el error hacemos uso del hook "useRouteError"
-
-  6.- De esta manera integramos mas a nuestro proyectos mensajes con una mejor experciencia de usuario.
-
+  1.- Como inicialmente manejamos la forma basica de "error.massage", aca podemos condicionarlo con (||)
+      para que me pueda trarer la difinición que hice para ese error.
+  
+  2.- Como extra algunos estilos adionales
 */

@@ -1,8 +1,18 @@
-export function loader({params}){
+import { obtenerCliente } from "../api/clientes";
 
-  console.log(params)
+export async function loader({params}){
+
+  const cliente = await obtenerCliente(params.clienteId)
   
-  return ''
+  // Manejo de error desde el loader:
+  if(Object.values(cliente).length === 0){
+    throw new Response('',{
+      status: 404,
+      statusText: 'El cliente no fue encontrado'
+    })
+  }
+  
+  return cliente
 }
 
 const EditarCliente = () => {
@@ -18,19 +28,16 @@ export default EditarCliente
 //? Trabajando con el componete
 
 /* 
-  1.- Hicimos como siempre el Snnipet, para trabajar en el componente (page), como un arrow function
+  1.- Importamos la funcion que creamos en cliente.js
 
-  2.- Te estaras preguntando como extraigo el valor de la URL, bueno aca entra de nuevo el loader, para 
-      cuando se cargue este componente (recuerdas useEffect = loader)
+  2.- Como la funcion es asincrona, debemos colocarle un await, para que espere un poco la respuesta
 
-  3.- Pero el lodaer no funcionara asi como asi, le debes decir al main.jsx que esta un loader en este
-      componente (pages), para que puedan trabajar junto y verse.
-
-  4.- Ya con el punto anterior  comunicandose el loader y el componente; le pasamos el valor de "params" 
-      que existe en react-router-dom
-
-  6.- Y de esa manera obtienes un obejeto, con la key con el nombre que definiste en el path (clienteId),
-      por eso es muy importante que cuando definas la ruta, le coloques nombre representativo; y su valor el que 
-      trae cuando le da click alñ boton editar.
-
+  3.- Si por alguna razón introducen algun id desde el url (que no es el deber ser), desde el loader
+      puedes tambien manejar los errores
+  
+  4.- Para que no te envie mensajes de errores nativos de React, tambien los puedes integrar a tu proyecto
+      con el componete que ya tenemos de errores
+  
+  5.- Recuerda que debes pasarle el componente que esta generando el problema, la propiedad "errorElement"
+      y como valor el compornente error
 */

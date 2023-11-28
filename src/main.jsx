@@ -27,7 +27,8 @@ const router = createBrowserRouter([
       {
         path: '/clientes/:clienteId/editar',
         element: <EditarCliente />,
-        loader: editarClienteLoader
+        loader: editarClienteLoader,
+        errorElement: <ErrorPage />
       }
     ]
   }
@@ -40,23 +41,11 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   </React.StrictMode>,
 )
 
-//? Editando cliente y el uso del hook useParams (Que estas dentro de Loader)
+//? Validando si existe el usuario 
 
 /* 
-  1.- Como otro estructura del REST API, la edicion forma parte de ella y la mejor forma de trabajar
-      es recuperando la información que vas editar y para esto creamos otro elemento hijo del Layout
-  
-  2.- La particularidad aca es "/:clienteId/", ya que por el id, es que vamos editar ese cliente, y esos
-      dos puntos (:), es lo que le indica a React, que eso sera dinamico
-
-  3.- Creamos otro componete dentro de page y lo pasamos a la propiedad "element"
-
-  4.- Importamos desde page, componente que recien creamos
-
-  5.- Se lo damos como valor a la propiedad element
-
-  6.- Importamos el loader desde EditarCliente.jsx y le cambiamos el nombre para que no exista conflicto y
-      se lo pasamos a la propiedad "loader" del elemento EditarCliente.
+  1.- Incluimos el componente ErrorPage.jsx a la ruta de EditarCliente, para integrar la a nuestro
+      proyecto una mejor experciencia de usuario y no nos salga la pagina por defaulto de React
 
 
   
