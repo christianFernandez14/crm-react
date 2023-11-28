@@ -4,7 +4,7 @@ const Cliente = ({ cliente }) => {
 
   const navigate = useNavigate()
 
-  console.log(cliente)
+  // console.log(cliente)
   const { id, nombre, empresa, telefono, email } = cliente
   return (
     <>
