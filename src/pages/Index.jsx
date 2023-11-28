@@ -4,9 +4,6 @@ import Cliente from "../components/Cliente";
 
 export function loader() {
 
-  // Caso curioso:
-  // return obtenerClientes()
-
   const clientes = obtenerClientes()
 
   return clientes;
@@ -55,8 +52,9 @@ const Index = () => {
 export default Index
 
 
-//? Agregando data a mi REST Api (Esto es el componente NuevoCliente)
+//? Algo importante
 
 /* 
-  1.- 
+  1.- Los loader, se encargar de tener sincronizado, todo lo que tenemos en pantalla, no hay que que ir a ningun
+      state a modificar, ya 'react-router-dom' lo hara automaticamente. 
 */

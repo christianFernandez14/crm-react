@@ -42,9 +42,24 @@ export async function actulizarCliente(id, datos){
 
 }
 
+export async function eliminarCliente(id){
+  // console.log('Elminando.. ', id)
+  try {
+    const respuesta = await fetch(`${import.meta.env.VITE_API_URL}/${id}`, {
+      method: 'DELETE'  
+
+    })
+    await respuesta.json()
+  } catch (error) {
+    console.log(error)
+  }
 
 
-//? Trabajando con editar cliente / Actulizando el cliente
+}
+
+
+
+//? Eliminando un registro del API
 /* 
   1.- Se crea un funcion "actulizarCliente", que es la que llevara la logica de la actualización.
   
@@ -55,5 +70,12 @@ export async function actulizarCliente(id, datos){
 
   4.- Muy parecida la logica de agregar cliente, pero lo cambias el la inyeccion de la id y el tipo
       de metodo.
+  
+  5.- Hacemos unas pruebas (clg), de que se esten comunicando 
+
+  6.- Ahora si implementamos la logica y este caso se cambia el method, por "delete" y no estaremos
+      pasando ni body, ni headers
+
+  7.- Y con esto estariamos listo con nustro REST Api
 
 */
