@@ -1,6 +1,7 @@
-import { obtenerCliente } from "../api/clientes";
-import { Form, useNavigate, useLoaderData } from "react-router-dom";
+import { obtenerCliente, actulizarCliente } from "../api/clientes";
+import { Form, useNavigate, useLoaderData, useActionData, redirect } from "react-router-dom";
 import Formulario from "../components/Formulario";
+import Error from "../components/Error";
 
 export async function loader({ params }) {
 
@@ -17,11 +18,40 @@ export async function loader({ params }) {
   return cliente
 }
 
+export async function action({request, params}) {
+  const formData = await request.formData()
+  const datos = Object.fromEntries(formData)
+  const email = formData.get('email')
+
+  // Validación:
+  const errores = []
+  if (Object.values(datos).includes('')) {
+    errores.push('Todos los campos son requeridos')
+  }
+
+  let regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+
+  if (!regex.test(email)) {
+    errores.push('No es un email valido')
+  }
+
+  // Retornando datos si hay errores:
+  if (Object.keys(errores).length) {
+    return errores;
+  }
+
+  // Actualizamos la data de cliente:
+  await actulizarCliente(params.clienteId, datos)
+
+  return redirect('/')
+
+}
+
 const EditarCliente = () => {
 
   const navigate = useNavigate()
   const cliente = useLoaderData()
-  // console.log(cliente)
+  const errores = useActionData()
 
   return (
     <>
@@ -38,9 +68,9 @@ const EditarCliente = () => {
       </div>
       <div className="bg-white shadow rounded-md md:w-3/4 mx-auto px-5 py-10">
 
-        {/* {errores?.length && errores.map((error, i)=> <Error key={i}>{error}</Error>) } */}
+        {errores?.length && errores.map((error, i) => <Error key={i}>{error}</Error>)}
         <Form
-          method="PUT"
+          method="put"
           noValidate
         >
           <Formulario
@@ -50,7 +80,7 @@ const EditarCliente = () => {
           <input
             type="submit"
             className="mt-5 w-full bg-blue-800 p-3 uppercase font-bold text-white text-lg hover:bg-blue-900 cursor-pointer transition-all"
-            value="Editar Cliente"
+            value="Guardar Cambios"
           />
         </Form>
 
@@ -63,19 +93,25 @@ export default EditarCliente
 
 
 
-//? Autocompletando los valores, para Editar
+//? Trabajando con el action, para poder editar lo que me trae el formulario
 
 /* 
-  1.- Nos copiamos el codigo que salia en el componente Nuevocliente.jsx (solo lo que renderizaba)
+  1.- Trabajamos con la misma información que esta en el action de NuevoCliente.jsx
 
-  2.- Moficamos algunos cosas para darle aspecto que estaba en editar y no creando uno nuevo.
+  2.- Todo lo que esta antes de la funcion "obtenerCliente", queda igual, y esta función que acabo
+      de mencionar, se le pasar el params, y los datos del formulariopara que pueda trer los datos 
+      de ese cliente.
 
-  3.- Tambien debimos importar algunas cosa, porque sino me genera errores como: (Form, useNavigate,
-      Formulario)
-  4.- Y como lo que quremos darle una buena experiencia de usarios, lo ideal es que cuando le des "editar"
-      algun cliente, este te traiga los datos autocompletados, para que sea el usuario que decisa que 
-      modificar.
-  5.- Para hacer lo anterior debemos usar useLoaderDate y pasarle lo que hay en loader
+  3.- Ahora bien mi componente (EditarCliente.jsx), tiene que saber que exite un action aca mismo
+      y asi poder ejercer su función.
+  
+  4.- Le decimos al main.jsx en el arbol de las rutas que este componente tiene un action.
 
-  6.- Verificamos que estamos mostrando los datos de loader con un CLG
+  5.- Revisando un poco, nos percatamos que nos genera algunos errores, y es porque no estan importadas
+      todas dependencia o propiedades que se requieren para trabajar el fomulario en este componente, como
+      redirec, Form, Formulario, Error, entre otras.
+  
+  6.- Otro dato curioso es que en el "method" (metodo), puede ser en minuscula o mayuscula e igual funciona.
+
+  7.- Dato curioso de esta manera se trabaja actualmente para app web y moviles con un mismo backend
 */

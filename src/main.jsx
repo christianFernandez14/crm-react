@@ -5,7 +5,7 @@ import Layout from './components/Layout';
 import ErrorPage from './components/ErrorPage';
 import NuevoCliente, { action as nuevoClienteAction } from './pages/NuevoCliente';
 import Index, { loader as clientesLoader } from './pages/Index';
-import EditarCliente, { loader as editarClienteLoader } from './pages/EditarCliente';
+import EditarCliente, { loader as editarClienteLoader, action as editarClienteAction } from './pages/EditarCliente';
 import './index.css'
 
 const router = createBrowserRouter([
@@ -28,6 +28,7 @@ const router = createBrowserRouter([
         path: '/clientes/:clienteId/editar',
         element: <EditarCliente />,
         loader: editarClienteLoader,
+        action: editarClienteAction,
         errorElement: <ErrorPage />
       }
     ]
@@ -41,14 +42,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   </React.StrictMode>,
 )
 
-//? Validando si existe el usuario 
+//? Trabajando con el action de EditarCliente
 
 /* 
-  1.- Incluimos el componente ErrorPage.jsx a la ruta de EditarCliente, para integrar la a nuestro
-      proyecto una mejor experciencia de usuario y no nos salga la pagina por defaulto de React
+  1.- En la ruta con el componente EditarCliente, le especificamos que tiene un action.
 
+  2.- Obviamente en el paso anterior lo importamos en este componentey lo renombramos, para que 
+      no vaya a tener conflictos con otros actions que estemos trabajando.
 
-  
 */
 
 
