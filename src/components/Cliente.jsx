@@ -1,6 +1,8 @@
-
+import { useNavigate } from "react-router-dom";
 
 const Cliente = ({ cliente }) => {
+
+  const navigate = useNavigate()
 
   console.log(cliente)
   const { id, nombre, empresa, telefono, email } = cliente
@@ -29,6 +31,7 @@ const Cliente = ({ cliente }) => {
           <button
             type="button"
             className="text-blue-600 hover:text-blue-700 uppercase font-bold text-xs"
+            onClick={ ()=> navigate(`/clientes/${id}/editar`)}
           >
             editar
           </button>
@@ -48,12 +51,16 @@ const Cliente = ({ cliente }) => {
 export default Cliente
 
 
-//? Mostrando el resto de la información que viene del state de clientes
+//? Editando cliente y el uso del hook useParams (Que estas dentro de Loader)
 /* 
-1.- Completamos la inforacion que va en la columna contacto y la columna Acciones
-2.- Le dimos algo de estilos a como se ve el contenido
-3.- En los botones de "editar" y "eliminar" es importante que le especique que es de tipo
-    button, para que se comporte como tal
+1.- Como los botones estan vacio (editar y eliminar), es decir no tienen funcionalidad, vamos hacer
+    uso del hook navigate, para que me lleve a la pages de Editar Cliente. con el evento onClick.
+
+2.- Obviamente, primero debo importarlo de react-router-dom y pasarselo aun variable, para luego pasarlo
+    al evento del onClick
+
+3.- Ahora el valor que lleva "navigate", sera la ruta que definimos para ese pages, y sera una combinación
+    de string y variables, ya que vamos inyectar el valor del id, cuando presionemos el boton de "editar"
  
 
 */
